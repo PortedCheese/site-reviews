@@ -13,3 +13,5 @@
 `php artisan vendor:publish --provider="PortedCheese\SiteReviews\ServiceProvider" --tag=public` - Копирует компоненты.
 
 `php artisan vendor:publish --provider="PortedCheese\SiteReviews\ServiceProvider" --tag=views` - Если нужно поменять стандартный вывод на сайт.
+
+`@includeIf("site-reviews::admin.menu")` - меню для админки

@@ -54,6 +54,7 @@ class ReviewsMakeCommand extends Command
             'path' => 'reviews',
             'email' => '',
             'customTheme' => null,
+            'needModerate' => true,
         ]);
 
         $this->info("Config reviews added to siteconfig");
