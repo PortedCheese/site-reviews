@@ -1,7 +1,7 @@
 @extends('admin.layout')
 
-@section('page-title', 'Настройки отзыввов - ')
-@section('header-title', 'Настройки отзыввов')
+@section('page-title', 'Настройки отзывов - ')
+@section('header-title', 'Настройки отзывов')
 
 @section('admin')
     <div class="col-12">

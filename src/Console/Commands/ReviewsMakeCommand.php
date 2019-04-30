@@ -53,6 +53,7 @@ class ReviewsMakeCommand extends Command
             'pager' => 10,
             'path' => 'reviews',
             'email' => '',
+            'customTheme' => null,
         ]);
 
         $this->info("Config reviews added to siteconfig");
