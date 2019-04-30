@@ -8,6 +8,8 @@
 
 `php artisan make:reviews` - Конфиг для отзывов.
 
+`php artisan migrate` - Создать таблицы.
+
 `php artisan vendor:publish --provider="PortedCheese\SiteReviews\ServiceProvider" --tag=public` - Копирует компоненты.
 
 `php artisan vendor:publish --provider="PortedCheese\SiteReviews\ServiceProvider" --tag=views` - Если нужно поменять стандартный вывод на сайт.
