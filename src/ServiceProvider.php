@@ -25,7 +25,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
         // Копирование шаблонов.
         $this->publishes([
-            __DIR__ . '/resources/views/site' => resource_path('views/vendor/site-reviews/site/reviews'),
+            __DIR__ . '/resources/views/site' => resource_path('views/vendor/site-reviews/site'),
         ], 'views');
 
         // Assets.
