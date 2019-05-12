@@ -12,6 +12,11 @@
 
 `php artisan vendor:publish --provider="PortedCheese\SiteReviews\ServiceProvider" --tag=public` - Копирует компоненты.
 
+`Vue.component(
+     'site-reviews',
+     require('./components/vendor/site-reviews/ReviewsComponent')
+ );` - Подключить компонент.
+
 `php artisan vendor:publish --provider="PortedCheese\SiteReviews\ServiceProvider" --tag=views` - Если нужно поменять стандартный вывод на сайт.
 
 `@includeIf("site-reviews::admin.menu")` - меню для админки
