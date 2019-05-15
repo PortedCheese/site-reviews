@@ -1,0 +1,19 @@
+
+
+if (siteconf()->get('news.useOwnSiteRoutes')) {
+    Route::group([
+        'namespace' => 'SiteReviews\Site',
+        'as' => 'site.reviews.',
+        'prefix' => siteconf()->get('reviews.path'),
+    ], function () {
+        Route::get('/', 'ReviewsController@index')
+            ->name('index');
+        Route::post('/', 'ReviewsController@store')
+            ->name('store');
+        Route::post('/answer', "ReviewsController@storeAnswer")
+            ->name('store-answer');
+
+        Route::get('/list', 'ReviewsController@list')
+            ->name('list');
+    });
+}

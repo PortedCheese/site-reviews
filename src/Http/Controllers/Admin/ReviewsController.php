@@ -3,10 +3,10 @@
 namespace PortedCheese\SiteReviews\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Review;
 use Illuminate\Http\Request;
 use PortedCheese\SiteReviews\Http\Requests\ReviewsSettingsRequest;
 use PortedCheese\SiteReviews\Http\Requests\ReviewStoreRequest;
-use PortedCheese\SiteReviews\Models\Review;
 
 class ReviewsController extends Controller
 {
@@ -155,6 +155,21 @@ class ReviewsController extends Controller
         else {
             $config['needModerate'] = false;
         }
+
+        if ($request->has('own-admin')) {
+            $config['useOwnAdminRoutes'] = true;
+        }
+        else {
+            $config['useOwnAdminRoutes'] = false;
+        }
+
+        if ($request->has('own-site')) {
+            $config['useOwnSiteRoutes'] = true;
+        }
+        else {
+            $config['useOwnSiteRoutes'] = false;
+        }
+
         siteconf()->save('reviews', $config);
         return redirect()
             ->back()

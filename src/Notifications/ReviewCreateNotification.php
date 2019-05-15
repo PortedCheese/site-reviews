@@ -6,7 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
-use PortedCheese\SiteReviews\Models\Review;
+use App\Review;
 
 class ReviewCreateNotification extends Notification
 {

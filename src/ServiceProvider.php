@@ -4,6 +4,7 @@ namespace PortedCheese\SiteReviews;
 
 use PortedCheese\BaseSettings\Events\UserUpdate;
 use PortedCheese\SiteReviews\Console\Commands\ReviewsMakeCommand;
+use PortedCheese\SiteReviews\Console\Commands\ReviewsOverrideCommand;
 use PortedCheese\SiteReviews\Listeners\UserUpdateClearCache;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
@@ -37,6 +38,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 ReviewsMakeCommand::class,
+                ReviewsOverrideCommand::class,
             ]);
         }
 

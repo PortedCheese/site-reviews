@@ -1,0 +1,9 @@
+<?php
+
+namespace {{namespace}};
+
+
+class Review extends \PortedCheese\SiteReviews\Models\Review
+{
+
+}

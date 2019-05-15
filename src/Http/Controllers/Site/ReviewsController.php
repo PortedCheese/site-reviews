@@ -7,7 +7,7 @@ use PortedCheese\SiteReviews\Http\Requests\ReviewStoreAnswerRequest;
 use PortedCheese\SiteReviews\Http\Requests\ReviewStoreRequest;
 use Illuminate\Http\Request;
 use PortedCheese\SeoIntegration\Models\Meta;
-use PortedCheese\SiteReviews\Models\Review;
+use App\Review;
 
 class ReviewsController extends Controller
 {

@@ -1,0 +1,10 @@
+<?php
+
+namespace {{namespace}}Http\Controllers\SiteReviews\Admin;
+
+use Illuminate\Http\Request;
+
+class ReviewsController extends \PortedCheese\SiteReviews\Http\Controllers\Admin\ReviewsController
+{
+
+}

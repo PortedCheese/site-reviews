@@ -4,7 +4,7 @@ namespace PortedCheese\SiteReviews\Listeners;
 
 
 use Illuminate\Support\Facades\Log;
-use PortedCheese\SiteReviews\Models\Review;
+use App\Review;
 
 class UserUpdateClearCache
 {
@@ -27,7 +27,6 @@ class UserUpdateClearCache
     public function handle($event)
     {
         $userId = $event->user->id;
-        Log::info($userId);
         $reviews = Review::where('user_id', $userId)->get();
         foreach ($reviews as $review) {
             $review->forgetTeaserCache();
