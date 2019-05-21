@@ -34,14 +34,18 @@
                         </td>
                         <td>
                             <confirm-delete-model-button model-id="{{ $review->id }}">
-                                <template slot="other">
-                                    @if ($moderated)
+                                @if ($moderated)
+                                    <template slot="forms">
                                         <form id="change-moderate-{{ $review->id }}"
                                               action="{{ route("admin.reviews.moderate", ['review' => $review]) }}"
                                               method="post">
                                             @method('put')
                                             @csrf
                                         </form>
+                                    </template>
+                                @endif
+                                <template slot="other">
+                                    @if ($moderated)
                                         <a href="#"
                                            class="btn btn-{{ $review->moderated ? "success" : "secondary" }}"
                                            onclick="event.preventDefault();document.getElementById('change-moderate-{{ $review->id }}').submit();">
