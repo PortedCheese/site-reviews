@@ -5,7 +5,7 @@
 @section('header-title', "Отзывы")
 
 @section('content')
-    <div class="container">
+    <div class="col-12">
         <site-reviews form-action="{{ route('site.reviews.store') }}"
                       answer-action="{{ route('site.reviews.store-answer') }}"
                       user-auth="{{ Auth::check() ? Auth::user()->id : false }}"
