@@ -155,7 +155,7 @@ class Review extends Model
             return $cached;
         }
         $answers = [];
-        foreach ($this->answers->sortBy('created_at') as $answer) {
+        foreach ($this->answers->where('moderated', 1)->sortBy('created_at') as $answer) {
             $answers[] = $answer->getTeaser();
         }
         Cache::forever("review-answers:{$this->id}", $answers);
