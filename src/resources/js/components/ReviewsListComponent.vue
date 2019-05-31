@@ -1,18 +1,22 @@
 <template>
-    <div class="row justify-content-center" id="review-list">
-        <div class="col-12 col-md-8 col-lg-10">
-            <div v-for="item in reviews" class="review-cover border-bottom">
+    <div class="row justify-content-center mt-4" id="review-list">
+        <div class="col-12">
+            <div v-for="item in reviews" class="review-cover mt-4">
                 <div v-html="item.html"></div>
                 <div class="row">
-                    <div class="col-10 offset-2">
-                        <button type="button" v-on:click="showAnswer(item.review)" class="btn btn-link" data-toggle="modal" data-target="#reviewCreate">
+                    <div class="col-12 col-md-10 offset-md-2 mt-3">
+                        <button type="button"
+                                v-on:click="showAnswer(item.review)"
+                                class="btn btn-light"
+                                data-toggle="modal"
+                                data-target="#reviewAnswerCreate">
                             Ответить
                         </button>
                     </div>
-                    <div class="col-10 offset-2">
-                        <div v-for="answer in item.answers">
+                    <div class="col-10 offset-2 mt-3">
+                        <template v-for="answer in item.answers">
                             <div v-html="answer"></div>
-                        </div>
+                        </template>
                     </div>
                 </div>
             </div>

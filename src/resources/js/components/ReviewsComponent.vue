@@ -3,15 +3,6 @@
         <div class="preloader text-center" v-if="loading">
             <i class="fas fa-spinner fa-spin fa-3x"></i>
         </div>
-        <div class="col-12">
-            <button type="button"
-                    v-on:click="showReview"
-                    class="btn btn-primary"
-                    data-toggle="modal"
-                    data-target="#reviewCreate">
-                Добавить отзыв
-            </button>
-        </div>
         <reviews-form :form-data="formData"
                       v-on:new-review="updateReviews"
                       ref="childForms">
