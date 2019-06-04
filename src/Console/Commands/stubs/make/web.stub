@@ -1,6 +1,6 @@
 
 
-if (siteconf()->get('news.useOwnSiteRoutes')) {
+if (siteconf()->get('reviews.useOwnSiteRoutes')) {
     Route::group([
         'namespace' => 'SiteReviews\Site',
         'as' => 'site.reviews.',

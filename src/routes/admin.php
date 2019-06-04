@@ -33,7 +33,7 @@ if (! siteconf()->get('reviews.useOwnAdminRoutes')) {
     });
 }
 
-if (! siteconf()->get('news.useOwnSiteRoutes')) {
+if (! siteconf()->get('reviews.useOwnSiteRoutes')) {
     Route::group([
         'namespace' => 'PortedCheese\SiteReviews\Http\Controllers\Site',
         'middleware' => ['web'],

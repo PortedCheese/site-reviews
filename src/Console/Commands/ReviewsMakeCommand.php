@@ -2,19 +2,21 @@
 
 namespace PortedCheese\SiteReviews\Console\Commands;
 
+use App\Menu;
+use App\MenuItem;
 use Illuminate\Console\Command;
-use Illuminate\Console\DetectsApplicationNamespace;
+use PortedCheese\BaseSettings\Console\Commands\BaseConfigModelCommand;
 
-class ReviewsMakeCommand extends Command
+class ReviewsMakeCommand extends BaseConfigModelCommand
 {
-    use DetectsApplicationNamespace;
 
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'make:reviews';
+    protected $signature = 'make:reviews
+                                {--menu : Only config menu}';
 
     /**
      * The console command description.
@@ -30,6 +32,20 @@ class ReviewsMakeCommand extends Command
     protected $models = [
         'Review.stub' => 'Review.php',
     ];
+
+    protected $configName = "reviews";
+
+    protected $configValues = [
+        'pager' => 10,
+        'path' => 'reviews',
+        'email' => '',
+        'customTheme' => null,
+        'needModerate' => true,
+        'useOwnAdminRoutes' => false,
+        'useOwnSiteRoutes' => false,
+    ];
+
+    protected $dir = __DIR__;
 
     /**
      * Create a new command instance.
@@ -51,65 +67,39 @@ class ReviewsMakeCommand extends Command
      */
     public function handle()
     {
-        $this->makeConfig();
-        $this->exportModels();
+        if (! $this->option('menu')) {
+            $this->exportModels();
+            $this->makeConfig();
+        }
+        $this->makeMenu();
     }
 
-    public function makeConfig()
+    protected function makeMenu()
     {
-        $config = siteconf()->get('reviews');
-        if (!empty($config)) {
-            if (! $this->confirm("Reviews config already exists. Replace it?")) {
-                return;
-            }
+        try {
+            $menu = Menu::where('key', 'admin')->firstOrFail();
+        }
+        catch (\Exception $e) {
+            return;
         }
 
-        siteconf()->save("reviews", [
-            'pager' => 10,
-            'path' => 'reviews',
-            'email' => '',
-            'customTheme' => null,
-            'needModerate' => true,
-            'useOwnAdminRoutes' => false,
-            'useOwnSiteRoutes' => false,
-        ]);
+        $title = "Отзывы";
+        $itemData = [
+            'title' => $title,
+            'template' => "site-reviews::admin.menu",
+            'url' => "#",
+            'class' => '@far fa-comments',
+            'menu_id' => $menu->id,
+        ];
 
-        $this->info("Config reviews added to siteconfig");
-    }
-
-    /**
-     * Create models files.
-     */
-    protected function exportModels()
-    {
-        foreach ($this->models as $key => $model) {
-            if (file_exists(app_path($model))) {
-                if (!$this->confirm("The [{$model}] model already exists. Do you want to replace it?")) {
-                    continue;
-                }
-            }
-
-            file_put_contents(
-                app_path($model),
-                $this->compileModetStub($key)
-            );
-
-            $this->info("Model [{$model}] generated successfully.");
+        try {
+            $menuItem = MenuItem::where('title', $title)->firstOrFail();
+            $menuItem->update($itemData);
+            $this->info("Элемент меню '$title' обновлен");
         }
-    }
-
-    /**
-     * Replace namespace in model.
-     *
-     * @param $model
-     * @return mixed
-     */
-    protected function compileModetStub($model)
-    {
-        return str_replace(
-            '{{namespace}}',
-            $this->namespace,
-            file_get_contents(__DIR__ . "/stubs/make/models/$model")
-        );
+        catch (\Exception $e) {
+            $menuItem = MenuItem::create($itemData);
+            $this->info("Элемент меню '$title' создан");
+        }
     }
 }
