@@ -45,6 +45,14 @@ class ReviewsMakeCommand extends BaseConfigModelCommand
         'useOwnSiteRoutes' => false,
     ];
 
+    protected $vueFolder = "site-reviews";
+
+    protected $vueIncludes = [
+        'app' => [
+            "site-reviews" => "ReviewsComponent",
+        ],
+    ];
+
     protected $dir = __DIR__;
 
     /**
@@ -69,6 +77,7 @@ class ReviewsMakeCommand extends BaseConfigModelCommand
     {
         if (! $this->option('menu')) {
             $this->exportModels();
+            $this->makeVueIncludes('app');
             $this->makeConfig();
         }
         $this->makeMenu();
@@ -93,7 +102,10 @@ class ReviewsMakeCommand extends BaseConfigModelCommand
         ];
 
         try {
-            $menuItem = MenuItem::where('title', $title)->firstOrFail();
+            $menuItem = MenuItem::query()
+                ->where('title', $title)
+                ->where("menu_id", $menu->id)
+                ->firstOrFail();
             $menuItem->update($itemData);
             $this->info("Элемент меню '$title' обновлен");
         }
