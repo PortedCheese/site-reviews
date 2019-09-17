@@ -97,7 +97,7 @@ class ReviewsMakeCommand extends BaseConfigModelCommand
             'title' => $title,
             'template' => "site-reviews::admin.menu",
             'url' => "#",
-            'class' => '@far fa-comments',
+            'ico' => 'far fa-comments',
             'menu_id' => $menu->id,
         ];
 
