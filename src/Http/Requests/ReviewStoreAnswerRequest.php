@@ -2,6 +2,7 @@
 
 namespace PortedCheese\SiteReviews\Http\Requests;
 
+use App\Review;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ReviewStoreAnswerRequest extends FormRequest
@@ -23,20 +24,11 @@ class ReviewStoreAnswerRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'description' => 'bail|required',
-            'from' => 'nullable|required_without:user_id',
-            'review_id' => 'required|exists:reviews,id',
-        ];
+        return Review::requestReviewStoreAnswer($this);
     }
 
     public function messages()
     {
-        return [
-            'description.required' => "Поле Текст отзыва обязательно для заполнения",
-            'from.required_without' => "Поле Ваше имя обязательно для заполнения",
-            'review_id.required' => "Не указан базовый отзыв",
-            'review_id.exists' => "Отзыв не найден",
-        ];
+        return Review::requestReviewStoreAnswer($this, true);
     }
 }

@@ -4,11 +4,11 @@ namespace PortedCheese\SiteReviews\Models;
 
 use App\User;
 use Carbon\Carbon;
-use Faker\Factory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Log;
+use PortedCheese\SiteReviews\Http\Requests\ReviewStoreAnswerRequest;
+use PortedCheese\SiteReviews\Http\Requests\ReviewStoreRequest;
 use PortedCheese\SiteReviews\Notifications\ReviewCreateNotification;
 
 class Review extends Model
@@ -26,27 +26,27 @@ class Review extends Model
     {
         parent::boot();
 
-        static::creating(function (Review $review) {
+        static::creating(function (\App\Review $review) {
             if (empty(siteconf()->get('reviews.needModerate'))) {
                 $review->moderated = 1;
             }
         });
 
-        static::created(function (Review $review) {
+        static::created(function (\App\Review $review) {
             if ($review->review_id) {
                 $review->answerTo->forgetAnswersCache();
             }
             $review->notify(new ReviewCreateNotification($review));
         });
 
-        static::updated(function (Review $review) {
+        static::updated(function (\App\Review $review) {
             $review->forgetTeaserCache();
             if ($review->review_id) {
                 $review->answerTo->forgetAnswersCache();
             }
         });
 
-        static::deleting(function (Review $review) {
+        static::deleting(function (\App\Review $review) {
             $review->forgetTeaserCache();
             if ($review->review_id) {
                 $review->answerTo->forgetAnswersCache();
@@ -85,7 +85,7 @@ class Review extends Model
      */
     public function answers()
     {
-        return $this->hasMany(Review::class);
+        return $this->hasMany(\App\Review::class);
     }
 
     /**
@@ -95,7 +95,7 @@ class Review extends Model
      */
     public function answerTo()
     {
-        return $this->belongsTo(Review::class, 'review_id');
+        return $this->belongsTo(\App\Review::class, 'review_id');
     }
 
     /**
@@ -113,6 +113,11 @@ class Review extends Model
         }
     }
 
+    public function getCreatedAtAttribute($value)
+    {
+        return datehelper()->changeTz($value);
+    }
+
     /**
      * Дата создания.
      *
@@ -123,6 +128,55 @@ class Review extends Model
         $carbon = Carbon::parse($this->created_at);
         $month = $carbon->localeMonth;
         return $carbon->format("d {$month} Y H:i");
+    }
+
+    /**
+     * Создание отзыва.
+     *
+     * @param ReviewStoreRequest $validator
+     * @param bool $attr
+     * @return array
+     */
+    public static function requestReviewStore(ReviewStoreRequest $validator, $attr = false)
+    {
+        if ($attr) {
+            return [
+                'description.required' => "Поле Текст отзыва обязательно для заполнения",
+                'from.required_without' => "Поле Ваше имя обязательно для заполнения",
+            ];
+        }
+        else {
+            return [
+                'description' => 'bail|required',
+                'from' => 'nullable|required_without:user_id',
+            ];
+        }
+    }
+
+    /**
+     * Создание ответа.
+     * 
+     * @param ReviewStoreAnswerRequest $validator
+     * @param bool $attr
+     * @return array
+     */
+    public static function requestReviewStoreAnswer(ReviewStoreAnswerRequest $validator, $attr = false)
+    {
+        if ($attr) {
+            return [
+                'description.required' => "Поле Текст отзыва обязательно для заполнения",
+                'from.required_without' => "Поле Ваше имя обязательно для заполнения",
+                'review_id.required' => "Не указан базовый отзыв",
+                'review_id.exists' => "Отзыв не найден",
+            ];
+        }
+        else {
+            return [
+                'description' => 'bail|required',
+                'from' => 'nullable|required_without:user_id',
+                'review_id' => 'required|exists:reviews,id',
+            ];
+        }
     }
 
     /**
