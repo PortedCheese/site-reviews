@@ -36,7 +36,7 @@ class Review extends Model
             if ($review->review_id) {
                 $review->answerTo->forgetAnswersCache();
             }
-            $review->notify(new ReviewCreateNotification($review));
+            $review->notify($review->getNotificationClass($review));
         });
 
         static::updated(function (\App\Review $review) {
@@ -57,6 +57,11 @@ class Review extends Model
         });
     }
 
+    public function getNotificationClass(\App\Review $review)
+    {
+        return new ReviewCreateNotification($review);
+    }
+
     /**
      * Route notifications for the mail channel.
      *
@@ -65,7 +70,7 @@ class Review extends Model
      */
     public function routeNotificationForMail($notification)
     {
-        return siteconf()->get('reviews.email');
+        return siteconf()->get("reviews", "email");
     }
 
     /**

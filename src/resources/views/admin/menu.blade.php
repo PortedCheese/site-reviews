@@ -12,12 +12,6 @@
          Отзывы
     </a>
     <div class="dropdown-menu" aria-labelledby="user-dropdown">
-        @role('admin')
-        <a href="{{ route('admin.reviews.settings') }}"
-           class="dropdown-item">
-            Настройки
-        </a>
-        @endrole
         <a href="{{ route('admin.reviews.index') }}"
            class="dropdown-item">
             Список

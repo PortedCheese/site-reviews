@@ -3,7 +3,7 @@
     "description": "Reviews for site",
     "type": "library",
     "require": {
-        "portedcheese/base-settings": "^v1.0",
+        "portedcheese/base-settings": "^v1.3",
         "portedcheese/seo-integration": "^v1.0"
     },
     "license": "MIT",

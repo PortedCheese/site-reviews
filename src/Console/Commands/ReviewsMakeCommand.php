@@ -4,7 +4,6 @@ namespace PortedCheese\SiteReviews\Console\Commands;
 
 use App\Menu;
 use App\MenuItem;
-use Illuminate\Console\Command;
 use PortedCheese\BaseSettings\Console\Commands\BaseConfigModelCommand;
 
 class ReviewsMakeCommand extends BaseConfigModelCommand
@@ -16,7 +15,12 @@ class ReviewsMakeCommand extends BaseConfigModelCommand
      * @var string
      */
     protected $signature = 'make:reviews
-                                {--menu : Only config menu}';
+                                {--all : Run all}
+                                {--menu : Config menu}
+                                {--models : Export models}
+                                {--controllers : Export controllers}
+                                {--vue : Export vue}
+                                {--config : Make config}';
 
     /**
      * The console command description.
@@ -25,24 +29,30 @@ class ReviewsMakeCommand extends BaseConfigModelCommand
      */
     protected $description = 'Make reviews settings';
 
+    protected $packageName = "SiteReviews";
+
     /**
      * The models that need to be exported.
      * @var array
      */
-    protected $models = [
-        'Review.stub' => 'Review.php',
+    protected $models = ['Review'];
+
+    protected $controllers = [
+        "Admin" => ["ReviewsController"],
+        "Site" => ["ReviewsController"],
     ];
 
     protected $configName = "reviews";
+
+    protected $configTitle = "Отзывы";
+
+    protected $configTemplate = "site-reviews::admin.settings";
 
     protected $configValues = [
         'pager' => 10,
         'path' => 'reviews',
         'email' => '',
-        'customTheme' => null,
         'needModerate' => true,
-        'useOwnAdminRoutes' => false,
-        'useOwnSiteRoutes' => false,
     ];
 
     protected $vueFolder = "site-reviews";
@@ -52,8 +62,6 @@ class ReviewsMakeCommand extends BaseConfigModelCommand
             "site-reviews" => "ReviewsComponent",
         ],
     ];
-
-    protected $dir = __DIR__;
 
     /**
      * Create a new command instance.
@@ -70,23 +78,37 @@ class ReviewsMakeCommand extends BaseConfigModelCommand
 
     /**
      * Execute the console command.
-     *
-     * @return mixed
      */
     public function handle()
     {
-        if (! $this->option('menu')) {
+        $all = $this->option("all");
+
+        if ($this->option('menu') || $all) {
+            $this->makeMenu();
+        }
+
+        if ($this->option("models") || $all) {
             $this->exportModels();
-            $this->makeVueIncludes('app');
+        }
+
+        if ($this->option("controllers") || $all) {
+            $this->exportControllers("Admin");
+            $this->exportControllers("Site");
+        }
+
+        if ($this->option("vue") || $all) {
+            $this->makeVueIncludes("app");
+        }
+
+        if ($this->option("config") || $all) {
             $this->makeConfig();
         }
-        $this->makeMenu();
     }
 
     protected function makeMenu()
     {
         try {
-            $menu = Menu::where('key', 'admin')->firstOrFail();
+            $menu = Menu::query()->where('key', 'admin')->firstOrFail();
         }
         catch (\Exception $e) {
             return;

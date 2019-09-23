@@ -4,7 +4,6 @@ namespace PortedCheese\SiteReviews;
 
 use PortedCheese\BaseSettings\Events\UserUpdate;
 use PortedCheese\SiteReviews\Console\Commands\ReviewsMakeCommand;
-use PortedCheese\SiteReviews\Console\Commands\ReviewsOverrideCommand;
 use PortedCheese\SiteReviews\Listeners\UserUpdateClearCache;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
@@ -16,12 +15,13 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         $this->loadMigrationsFrom(__DIR__ . "/database/migrations");
 
         // Подключить роуты.
+        $this->loadRoutesFrom(__DIR__ . "/routes/web.php");
         $this->loadRoutesFrom(__DIR__ . "/routes/admin.php");
 
         // Подключаем шаблоны.
         $this->loadViewsFrom(__DIR__ . "/resources/views", "site-reviews");
         view()->composer("site-reviews::admin.menu", function ($view) {
-            $view->with('needModerate', siteconf()->get('reviews.needModerate'));
+            $view->with('needModerate', siteconf()->get('reviews', "needModerate"));
         });
 
         // Копирование шаблонов.
@@ -38,7 +38,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 ReviewsMakeCommand::class,
-                ReviewsOverrideCommand::class,
             ]);
         }
 
