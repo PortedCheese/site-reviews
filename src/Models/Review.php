@@ -27,7 +27,7 @@ class Review extends Model
         parent::boot();
 
         static::creating(function (\App\Review $review) {
-            if (empty(siteconf()->get('reviews.needModerate'))) {
+            if (empty(siteconf()->get('reviews', "needModerate"))) {
                 $review->moderated = 1;
             }
         });

@@ -30,29 +30,29 @@
                                         {{ $review->user->email }}
                                     @endempty
                                 </td>
-                                <td>{{ $review->created_human }}</td>
+                                <td>{{ datehelper()->format($review->created_at) }}</td>
                                 <td>
                                     {{ $review->review_id }}
                                 </td>
                                 <td>
-                                    <confirm-delete-model-button model-id="{{ $review->id }}">
-                                        @if ($moderated)
-                                            <template slot="forms">
-                                                <form id="change-moderate-{{ $review->id }}"
-                                                      action="{{ route("admin.reviews.moderate", ['review' => $review]) }}"
-                                                      method="post">
-                                                    @method('put')
-                                                    @csrf
-                                                </form>
-                                            </template>
-                                        @endif
-                                        <template slot="other">
+                                    <div role="toolbar" class="btn-toolbar">
+                                        <div class="btn-group btn-group-sm mr-1">
+                                            <a href="{{ route("admin.reviews.edit", ["review" => $review]) }}" class="btn btn-primary">
+                                                <i class="far fa-edit"></i>
+                                            </a>
+                                            <a href="{{ route('admin.reviews.show', ['review' => $review]) }}" class="btn btn-dark">
+                                                <i class="far fa-eye"></i>
+                                            </a>
+                                            <button type="button" class="btn btn-danger" data-confirm="{{ "delete-form-{$review->id}" }}">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </div>
+                                        <div class="btn-group btn-group-sm">
                                             @if ($moderated)
-                                                <a href="#"
-                                                   class="btn btn-{{ $review->moderated ? "success" : "secondary" }}"
-                                                   onclick="event.preventDefault();document.getElementById('change-moderate-{{ $review->id }}').submit();">
+                                                <button type="button" class="btn btn-{{ $review->moderated ? "success" : "secondary" }}"
+                                                        data-confirm="{{ "change-moderate-{$review->id}" }}">
                                                     <i class="fas fa-toggle-{{ $review->moderated ? "on" : "off" }}"></i>
-                                                </a>
+                                                </button>
                                             @endif
                                             @if ($review->review_id)
                                                 <a href="{{ route('admin.reviews.show', ['review' => $review->review_id]) }}"
@@ -60,29 +60,33 @@
                                                     <i class="far fa-caret-square-up"></i>
                                                 </a>
                                             @endif
-                                        </template>
-                                        <template slot="edit">
-                                            <a href="{{ route('admin.reviews.edit', ['review' => $review]) }}"
-                                               class="btn btn-primary">
-                                                <i class="fas fa-edit"></i>
-                                            </a>
-                                        </template>
-                                        <template slot="show">
-                                            <a href="{{ route('admin.reviews.show', ['review' => $review]) }}"
-                                               class="btn btn-dark">
-                                                <i class="fas fa-eye"></i>
-                                            </a>
-                                        </template>
-                                        <template slot="delete">
+                                        </div>
+                                    </div>
+                                    <confirm-form :id="'{{ "delete-form-{$review->id}" }}'">
+                                        <template>
                                             <form action="{{ route('admin.reviews.destroy', ['review' => $review]) }}"
-                                                  id="delete-{{ $review->id }}"
+                                                  id="delete-form-{{ $review->id }}"
                                                   class="btn-group"
                                                   method="post">
                                                 @csrf
                                                 <input type="hidden" name="_method" value="DELETE">
                                             </form>
                                         </template>
-                                    </confirm-delete-model-button>
+                                    </confirm-form>
+                                    @if ($moderated)
+                                        <confirm-form :id="'{{ "change-moderate-{$review->id}" }}'"
+                                                      confirm-text="Да, изменить!"
+                                                      text="Это изменит статус показа отзыва на сайте">
+                                            <template>
+                                                <form id="change-moderate-{{ $review->id }}"
+                                                      action="{{ route("admin.reviews.moderate", ['review' => $review]) }}"
+                                                      method="post">
+                                                    @method('put')
+                                                    @csrf
+                                                </form>
+                                            </template>
+                                        </confirm-form>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach

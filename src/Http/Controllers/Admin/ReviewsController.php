@@ -28,12 +28,12 @@ class ReviewsController extends Controller
         $reviews->orderBy('created_at', 'desc');
         return view("site-reviews::admin.index", [
             'reviews' => $reviews
-                ->paginate(siteconf()->get('reviews.pager'))
+                ->paginate(siteconf()->get('reviews', "pager"))
                 ->appends($request->input()),
             'query' => $query,
             'per' => self::PAGER,
             'page' => $request->query->get('page', 1) - 1,
-            'moderated' => siteconf()->get('reviews.needModerate'),
+            'moderated' => siteconf()->get('reviews', "needModerate"),
         ]);
     }
 
@@ -47,7 +47,7 @@ class ReviewsController extends Controller
     {
         return view("site-reviews::admin.show", [
             'review' => $review,
-            'moderated' => siteconf()->get('reviews.needModerate'),
+            'moderated' => siteconf()->get('reviews', "needModerate"),
         ]);
     }
 
@@ -110,7 +110,7 @@ class ReviewsController extends Controller
         }
         $review->delete();
         return redirect()
-            ->back()
+            ->route("admin.reviews.index")
             ->with("success", "Отзыв успешно удален");
     }
 }

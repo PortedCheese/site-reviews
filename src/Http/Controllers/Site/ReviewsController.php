@@ -21,7 +21,6 @@ class ReviewsController extends Controller
     {
         return view("site-reviews::site.index", [
             'pageMetas' => Meta::getByPageKey('reviews'),
-            'customTheme' => siteconf()->get('reviews.customTheme'),
         ]);
     }
 
@@ -31,7 +30,7 @@ class ReviewsController extends Controller
     public function store(ReviewStoreRequest $request)
     {
         Review::create($request->all());
-        if (siteconf()->get('reviews.needModerate')) {
+        if (siteconf()->get('reviews', "needModerate")) {
             $message = "Ваш отзыв получен, он появится на сайте после модерации администратором";
         }
         else {
@@ -51,7 +50,7 @@ class ReviewsController extends Controller
     public function storeAnswer(ReviewStoreAnswerRequest $request)
     {
         Review::create($request->all());
-        if (siteconf()->get('reviews.needModerate')) {
+        if (siteconf()->get('reviews', "needModerate")) {
             $message = "Ваш отзыв получен, он появится на сайте после модерации администратором";
         }
         else {
@@ -74,7 +73,7 @@ class ReviewsController extends Controller
             ->where('moderated', 1)
             ->whereNull('review_id')
             ->orderBy('created_at', 'desc')
-            ->paginate(siteconf()->get('reviews.pager'))
+            ->paginate(siteconf()->get('reviews', "pager"))
             ->appends($request->input());
         $rendered = [];
         foreach ($reviews as $review) {
