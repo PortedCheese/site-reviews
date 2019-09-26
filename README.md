@@ -6,14 +6,19 @@
 
 ## Установка
 
-`php artisan make:reviews
-        {--all : Run all}
-        {--menu : Config menu}
-        {--models : Export models}
-        {--controllers : Export controllers}
-        {--vue : Export vue}
-        {--config : Make config}` - Конфиг и модели для отзывов.
+`php artisan make:reviews`
 
+`{--all : Run all}`
+
+`{--menu : Config menu}`
+
+`{--models : Export models}`
+
+`{--controllers : Export controllers}`
+
+`{--vue : Export vue}`
+
+`{--config : Make config}`
 
 `php artisan migrate` - Создать таблицы.
 
