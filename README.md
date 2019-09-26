@@ -6,19 +6,15 @@
 
 ## Установка
 
-`php artisan make:reviews` - Конфиг и модели для отзывов.
+`php artisan make:reviews
+        {--all : Run all}
+        {--menu : Config menu}
+        {--models : Export models}
+        {--controllers : Export controllers}
+        {--vue : Export vue}
+        {--config : Make config}` - Конфиг и модели для отзывов.
 
-`php artisan override:reviews --admin --site` - контроллеры и роуты.
 
 `php artisan migrate` - Создать таблицы.
 
 `php artisan vendor:publish --provider="PortedCheese\SiteReviews\ServiceProvider" --tag=public --force` - Копирует компоненты.
-
-`Vue.component(
-     'site-reviews',
-     require('./components/vendor/site-reviews/ReviewsComponent')
- );` - Подключить компонент.
-
-`php artisan vendor:publish --provider="PortedCheese\SiteReviews\ServiceProvider" --tag=views` - Если нужно поменять стандартный вывод на сайт.
-
-`@includeIf("site-reviews::admin.menu")` - меню для админки
