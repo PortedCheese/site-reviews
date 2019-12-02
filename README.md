@@ -6,20 +6,13 @@
 
 ## Установка
 
-`php artisan make:reviews`
-
-`{--all : Run all}`
-
-`{--menu : Config menu}`
-
-`{--models : Export models}`
-
-`{--controllers : Export controllers}`
-
-`{--vue : Export vue}`
-
-`{--config : Make config}`
-
-`php artisan migrate` - Создать таблицы.
-
-`php artisan vendor:publish --provider="PortedCheese\SiteReviews\ServiceProvider" --tag=public --force` - Копирует компоненты.
+    php artisan migrate
+    
+    php artisan vendor:publish --provider="PortedCheese\SiteReviews\ServiceProvider" --tag=public --force
+    
+    php artisan make:reviews {--all : Run all}
+                             {--menu : Config menu}
+                             {--models : Export models}
+                             {--controllers : Export controllers}
+                             {--vue : Export vue}
+                             {--config : Make config}
