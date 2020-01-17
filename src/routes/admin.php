@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group([
     'namespace' => 'App\Http\Controllers\Vendor\SiteReviews\Admin',
-    'middleware' => ['web', 'role:admin|editor'],
+    'middleware' => ['web', 'management'],
     'as' => 'admin.reviews.',
     'prefix' => 'admin/reviews',
 ], function () {

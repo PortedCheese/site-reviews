@@ -5,12 +5,17 @@ namespace PortedCheese\SiteReviews\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Review;
 use Illuminate\Http\Request;
-use PortedCheese\SiteReviews\Http\Requests\ReviewsSettingsRequest;
 use PortedCheese\SiteReviews\Http\Requests\ReviewStoreRequest;
 
 class ReviewsController extends Controller
 {
     const PAGER = 20;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->authorizeResource(Review::class, "review");
+    }
 
     /**
      * Все отзывы.
@@ -75,7 +80,7 @@ class ReviewsController extends Controller
     {
         $review->update($request->all());
         return redirect()
-            ->route("admin.reviews.index")
+            ->route("admin.reviews.show", ['review' => $review])
             ->with('success', 'Отзыв успешно обновлен');
     }
 
@@ -84,9 +89,11 @@ class ReviewsController extends Controller
      *
      * @param Review $review
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function changeModerate(Review $review)
     {
+        $this->authorize("publish", $review);
         $review->moderated = !$review->moderated;
         $review->save();
         return redirect()

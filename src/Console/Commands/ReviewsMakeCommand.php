@@ -19,6 +19,7 @@ class ReviewsMakeCommand extends BaseConfigModelCommand
                                 {--menu : Config menu}
                                 {--models : Export models}
                                 {--controllers : Export controllers}
+                                {--policies : Export and create rules}
                                 {--vue : Export vue}
                                 {--config : Make config}';
 
@@ -43,11 +44,8 @@ class ReviewsMakeCommand extends BaseConfigModelCommand
     ];
 
     protected $configName = "reviews";
-
     protected $configTitle = "Отзывы";
-
     protected $configTemplate = "site-reviews::admin.settings";
-
     protected $configValues = [
         'pager' => 10,
         'path' => 'reviews',
@@ -56,10 +54,17 @@ class ReviewsMakeCommand extends BaseConfigModelCommand
     ];
 
     protected $vueFolder = "site-reviews";
-
     protected $vueIncludes = [
         'app' => [
             "site-reviews" => "ReviewsComponent",
+        ],
+    ];
+
+    protected $ruleRules = [
+        [
+            "title" => "Отзывы",
+            "slug" => "review",
+            "policy" => "ReviewPolicy",
         ],
     ];
 
@@ -103,6 +108,10 @@ class ReviewsMakeCommand extends BaseConfigModelCommand
         if ($this->option("config") || $all) {
             $this->makeConfig();
         }
+
+        if ($this->option("policies") || $all) {
+            $this->makeRules();
+        }
     }
 
     protected function makeMenu()
@@ -132,7 +141,7 @@ class ReviewsMakeCommand extends BaseConfigModelCommand
             $this->info("Элемент меню '$title' обновлен");
         }
         catch (\Exception $e) {
-            $menuItem = MenuItem::create($itemData);
+            MenuItem::create($itemData);
             $this->info("Элемент меню '$title' создан");
         }
     }
