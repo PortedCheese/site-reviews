@@ -10,9 +10,18 @@
     
     php artisan vendor:publish --provider="PortedCheese\SiteReviews\ServiceProvider" --tag=public --force
     
-    php artisan make:reviews {--all : Run all}
-                             {--menu : Config menu}
-                             {--models : Export models}
-                             {--controllers : Export controllers}
-                             {--vue : Export vue}
-                             {--config : Make config}
+    php artisan make:reviews
+                            {--all : Run all}
+                            {--menu : Config menu}
+                            {--models : Export models}
+                            {--controllers : Export controllers}
+                            {--policies : Export and create rules}
+                            {--vue : Export vue}
+                            {--config : Make config}
+
+### Versions:
+
+    v1.2.2:
+        - Добавлены права доступа
+    Обновление:
+        - php artisan make:reviews --policies
