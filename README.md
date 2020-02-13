@@ -16,11 +16,15 @@
                             {--models : Export models}
                             {--controllers : Export controllers}
                             {--policies : Export and create rules}
+                            {--only-default : Create default rules}
                             {--vue : Export vue}
                             {--config : Make config}
 
 ### Versions:
 
+    v1.2.3:
+        - Добавлен параметр --only-default в команду
+        
     v1.2.2:
         - Добавлены права доступа
     Обновление:
