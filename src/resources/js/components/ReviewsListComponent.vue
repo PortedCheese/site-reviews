@@ -7,7 +7,7 @@
                     <div class="col-12 col-md-10 offset-md-2 mt-3">
                         <button type="button"
                                 v-on:click="showAnswer(item.review)"
-                                class="btn btn-light"
+                                class="btn btn-outline-primary"
                                 data-toggle="modal"
                                 data-target="#reviewAnswerCreate">
                             Ответить

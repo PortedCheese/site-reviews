@@ -13,30 +13,37 @@
                    v-if="formData.user"
                    :value="formData.user">
 
-            <div class="input-group input-group-lg">
+            <div class="form-group mt-3" v-if="! formData.user">
+               <label for="from">Ваше имя:</label>
                 <input type="text"
                        id="from"
                        name="from"
                        v-model="from"
-                       v-if="! formData.user"
-                       placeholder="Имя"
-                       class="form-control">
+                       placeholder="Иванов Иван"
+                       class="form-control mb-3">
+            </div>
 
-                <input type="text"
+            <div class="form-group mt-3">
+                <label for="description">Ваш отзыв:</label>
+                <textarea type="text"
                        v-model="description"
                        name="description"
+                       rows="3"
+                       cols="4"
                        id="description"
                        placeholder="Сообщение"
-                       class="form-control">
+                       class="form-control mb-3">
+                       </textarea>
 
-                <div class="input-group-append">
-                    <button type="button"
-                            class="btn btn-primary"
-                            :disabled="loading"
-                            v-on:click="submitCreateForm('createReviewForm')">
-                        Оставить отзыв <i class="fas fa-spinner fa-spin" v-if="loading"></i>
-                    </button>
-                </div>
+            </div>
+
+            <div class="form-group">
+                <button type="button"
+                        class="btn btn-primary"
+                        :disabled="loading"
+                        @click="inlineForm()">
+                    Оставить отзыв <i class="fas fa-spinner fa-spin" v-if="loading"></i>
+                </button>
             </div>
         </form>
 
@@ -53,8 +60,8 @@
                     </div>
                     <div class="modal-body">
                         <form id="createReviewAnswerForm">
-                            <div class="alert" :class="{'alert-danger': error, 'alert-success': !error}" role="alert" v-if="messages.length">
-                                <template v-for="message in messages">
+                            <div class="alert" :class="{'alert-danger': error, 'alert-success': !error}" role="alert" v-if="aMessages.length">
+                                <template v-for="message in aMessages">
                                     {{ message }}
                                     <br>
                                 </template>
@@ -69,31 +76,35 @@
                                    v-if="formData.user"
                                    :value="formData.user">
                             <div class="form-group" v-else>
+                                <label for="fromAnswer" class="sr-only">Имя</label>
                                 <input type="text"
                                        id="fromAnswer"
                                        name="from"
-                                       v-model="from"
+                                       v-model="aFrom"
                                        placeholder="Имя"
-                                       class="form-control form-control-lg">
+                                       class="form-control">
                             </div>
 
                             <div class="form-group">
-                                <input type="text"
-                                       v-model="description"
+                                <label for="descriptionAnswer" class="sr-only">Сообщение</label>
+                                <textarea type="text"
+                                       v-model="aDescription"
                                        name="description"
+                                       rows="3"
+                                       cols="4"
                                        id="descriptionAnswer"
                                        placeholder="Сообщение"
-                                       class="form-control form-control-lg">
+                                       class="form-control"></textarea>
                             </div>
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <div class="btn-group-vertical btn-block"
+                        <div class="btn-group-vertical"
                              role="group">
                             <button type="button"
-                                    class="btn btn-primary btn-lg"
+                                    class="btn btn-primary"
                                     :disabled="loading"
-                                    v-on:click="submitCreateForm('createReviewAnswerForm')">
+                                    v-on:click="modalForm()">
                                 Оставить отзыв <i class="fas fa-spinner fa-spin" v-if="loading"></i>
                             </button>
                         </div>
@@ -110,18 +121,36 @@
         data() {
             return {
                 messages: [],
-                description: null,
-                from: null,
+                aMessages: [],
+                description: "",
+                from: "",
+                aDescription: "",
+                aFrom: "",
                 loading: false,
-                error: false
+                error: false,
+                aError: "",
+                modal: false,
+                form: false,
             };
         },
+
         methods: {
+            inlineForm() {
+                this.modal = false;
+                this.submitCreateForm('createReviewForm');
+            },
+
+            modalForm() {
+                this.modal = true;
+                this.submitCreateForm('createReviewAnswerForm');
+            },
+
             submitCreateForm(id) {
                 let form = document.getElementById(id);
                 let formData = new FormData(form);
                 this.loading = true;
                 this.messages = [];
+                this.aMessages = [];
                 this.error = false;
 
                 let action = formData.review ? this.formData.answer : this.formData.action;
@@ -132,19 +161,29 @@
                     .then(response => {
                         let result = response.data;
                         this.messages.push(result.message);
+                        $("#reviewAnswerCreate").modal('hide');
                     })
                     .catch(error => {
                         this.error = true;
                         let data = error.response.data;
                         for (error in data.errors) {
-                            this.messages.push(data.errors[error][0]);
+                            if (data.errors.hasOwnProperty(error)) {
+                                if (this.modal) {
+                                    this.aMessages.push(data.errors[error][0]);
+                                }
+                                else {
+                                    this.messages.push(data.errors[error][0]);
+                                }
+                            }
                         }
                     })
                     .finally(() => {
                         this.loading = false;
-                        if (!this.error) {
+                        if (! this.error) {
                             this.from = null;
                             this.description = null;
+                            this.aFrom = null;
+                            this.aDescription = null;
                             this.$emit('new-review');
                         }
                     });
@@ -154,5 +193,6 @@
 </script>
 
 <style scoped>
+
 
 </style>

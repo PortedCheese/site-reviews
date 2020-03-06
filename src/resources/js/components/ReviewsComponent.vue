@@ -19,13 +19,13 @@
 </template>
 
 <script>
-    import ReviewsFormComponent from './ReviewsFormComponent'
-    import ReviewsListComponent from './ReviewsListComponent'
+    import Form from './ReviewsFormComponent'
+    import List from './ReviewsListComponent'
 
     export default {
         components: {
-            'reviews-form': ReviewsFormComponent,
-            'reviews-list': ReviewsListComponent
+            'reviews-form': Form,
+            'reviews-list': List
         },
         props: ['formAction', 'userAuth', 'getUrl', 'answerAction'],
         data() {

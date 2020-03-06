@@ -22,6 +22,14 @@
 
 ### Versions:
 
+    v1.2.4:
+        - Изменен внешний вид отзывов
+        - Для тизера запоминаются только данные, а не шаблон
+        - Формы разделены, ошибки выводятся в разные места
+    Обновление:
+        - php artisan vendor:publish --provider="PortedCheese\SiteReviews\ServiceProvider" --tag=public --force
+        - php artisan cache:clear
+
     v1.2.3:
         - Добавлен параметр --only-default в команду
         

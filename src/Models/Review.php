@@ -7,8 +7,6 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Cache;
-use PortedCheese\SiteReviews\Http\Requests\ReviewStoreAnswerRequest;
-use PortedCheese\SiteReviews\Http\Requests\ReviewStoreRequest;
 use PortedCheese\SiteReviews\Notifications\ReviewCreateNotification;
 
 class Review extends Model
@@ -57,6 +55,12 @@ class Review extends Model
         });
     }
 
+    /**
+     * Класс для уведомлений.
+     *
+     * @param \App\Review $review
+     * @return ReviewCreateNotification
+     */
     public function getNotificationClass(\App\Review $review)
     {
         return new ReviewCreateNotification($review);
@@ -118,6 +122,12 @@ class Review extends Model
         }
     }
 
+    /**
+     * Добавлен.
+     *
+     * @param $value
+     * @return mixed
+     */
     public function getCreatedAtAttribute($value)
     {
         return datehelper()->changeTz($value);
@@ -136,55 +146,6 @@ class Review extends Model
     }
 
     /**
-     * Создание отзыва.
-     *
-     * @param ReviewStoreRequest $validator
-     * @param bool $attr
-     * @return array
-     */
-    public static function requestReviewStore(ReviewStoreRequest $validator, $attr = false)
-    {
-        if ($attr) {
-            return [
-                'description.required' => "Поле Текст отзыва обязательно для заполнения",
-                'from.required_without' => "Поле Ваше имя обязательно для заполнения",
-            ];
-        }
-        else {
-            return [
-                'description' => 'bail|required',
-                'from' => 'nullable|required_without:user_id',
-            ];
-        }
-    }
-
-    /**
-     * Создание ответа.
-     * 
-     * @param ReviewStoreAnswerRequest $validator
-     * @param bool $attr
-     * @return array
-     */
-    public static function requestReviewStoreAnswer(ReviewStoreAnswerRequest $validator, $attr = false)
-    {
-        if ($attr) {
-            return [
-                'description.required' => "Поле Текст отзыва обязательно для заполнения",
-                'from.required_without' => "Поле Ваше имя обязательно для заполнения",
-                'review_id.required' => "Не указан базовый отзыв",
-                'review_id.exists' => "Отзыв не найден",
-            ];
-        }
-        else {
-            return [
-                'description' => 'bail|required',
-                'from' => 'nullable|required_without:user_id',
-                'review_id' => 'required|exists:reviews,id',
-            ];
-        }
-    }
-
-    /**
      * Получить тизер отзыва.
      *
      * @return string
@@ -192,14 +153,17 @@ class Review extends Model
      */
     public function getTeaser()
     {
-        $cached = Cache::get("review-teaser:{$this->id}");
-        if (!empty($cached)) {
-            return $cached;
-        }
-        $view = view("site-reviews::site.teaser", ['review' => $this]);
-        $html = $view->render();
-        Cache::forever("review-teaser:{$this->id}", $html);
-        return $html;
+        $key = "review-teaser:{$this->id}";
+        $review = $this;
+        $data = Cache::rememberForever($key, function () use ($review) {
+            return [
+                "user" => $review->user,
+                "avatar" => $review->user->avatar,
+                "review" => $review,
+            ];
+        });
+        $view = view("site-reviews::site.teaser", $data);
+        return $view->render();
     }
 
     /**
