@@ -115,4 +115,14 @@
             </div>
         </div>
     </div>
+
+    @if ($reviews->lastPage() > 1)
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    {{ $reviews->links() }}
+                </div>
+            </div>
+        </div>
+    @endif
 @endsection
