@@ -156,9 +156,16 @@ class Review extends Model
         $key = "review-teaser:{$this->id}";
         $review = $this;
         $data = Cache::rememberForever($key, function () use ($review) {
+            $user = $review->user;
+            if ($user) {
+                $avatar = $user->avatar;
+            }
+            else {
+                $avatar = false;
+            }
             return [
-                "user" => $review->user,
-                "avatar" => $review->user->avatar,
+                "user" => $user,
+                "avatar" => $avatar,
                 "review" => $review,
             ];
         });
