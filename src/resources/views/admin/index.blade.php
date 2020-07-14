@@ -7,7 +7,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <div class="responsive-table">
+                <div class="table-responsive">
                     <table class="table">
                         <thead>
                         <tr>

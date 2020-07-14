@@ -3,9 +3,9 @@
 namespace PortedCheese\SiteReviews\Http\Controllers\Site;
 
 use App\Http\Controllers\Controller;
+use App\Meta;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
-use PortedCheese\SeoIntegration\Models\Meta;
 use App\Review;
 
 class ReviewsController extends Controller
