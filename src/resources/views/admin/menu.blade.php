@@ -12,17 +12,17 @@
                     @isset($ico)
                         <i class="{{ $ico }}"></i>
                     @endisset
-                    Отзывы
+                    <span>Отзывы</span>
                 </a>
                 <div id="collapse-reviews-menu" class="collapse{{ $active ? " show" : "" }}" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a href="{{ route('admin.reviews.index') }}"
                            class="collapse-item{{ $currentRoute == "admin.reviews.index" ? " active" : "" }}">
-                            Список
+                            <span>Список</span>
                         </a>
                         <a href="{{ route('admin.reviews.need-moderate') }}"
                            class="collapse-item{{ $currentRoute == "admin.reviews.need-moderate" ? " active" : "" }}">
-                            Ожидают модерации
+                            <span>Ожидают модерации</span>
                         </a>
                     </div>
                 </div>
