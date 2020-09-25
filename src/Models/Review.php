@@ -14,10 +14,11 @@ class Review extends Model
     use Notifiable;
 
     protected $fillable = [
-        'description',
-        'from',
-        'user_id',
-        'review_id',
+        "description",
+        "from",
+        "user_id",
+        "review_id",
+        "registered_at",
     ];
 
     protected static function boot()
@@ -25,8 +26,9 @@ class Review extends Model
         parent::boot();
 
         static::creating(function (\App\Review $review) {
+            $review->registered_at = now("Europe/Moscow");
             if (empty(base_config()->get('reviews', "needModerate"))) {
-                $review->moderated = 1;
+                $review->moderated_at = now();
             }
         });
 
@@ -146,6 +148,16 @@ class Review extends Model
     }
 
     /**
+     * Дата создания.
+     *
+     * @return string
+     */
+    public function getRegisteredHumanAttribute()
+    {
+        return datehelper()->format($this->registered_at, "d.m.Y");
+    }
+
+    /**
      * Получить тизер отзыва.
      *
      * @return string
@@ -187,7 +199,7 @@ class Review extends Model
         }
         $answers = [];
         $collection = $this->answers
-            ->where('moderated', 1)
+            ->whereNotNull('moderated_at')
             ->sortBy('created_at');
         foreach ($collection as $answer) {
             /**

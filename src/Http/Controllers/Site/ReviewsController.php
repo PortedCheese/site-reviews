@@ -119,9 +119,9 @@ class ReviewsController extends Controller
     public function list(Request $request)
     {
         $reviews = Review::query()
-            ->where('moderated', 1)
+            ->whereNotNull('moderated_at')
             ->whereNull('review_id')
-            ->orderBy('created_at', 'desc')
+            ->orderBy('registered_at', 'desc')
             ->paginate(base_config()->get('reviews', "pager"))
             ->appends($request->input());
         $rendered = [];

@@ -19,7 +19,7 @@
                     <br>
                     <small class="text-black-50">
                         <b>
-                            {{ date("d.m.Y", strtotime($review->created_at)) }}
+                            {{ $review->registered_human }}
                         </b>
                     </small>
                 </h6>
@@ -34,7 +34,7 @@
                     <hr>
                     <small class="text-black-50 lead">
                         <b class="small">
-                            {{ date("d.m.Y", strtotime($review->created_at)) }}
+                            {{ $review->registered_human }}
                         </b>
                     </small>
                 </h4>

@@ -30,6 +30,7 @@
                     @empty ($review->from)
                         <input type="hidden" name="user_id" value="{{ $review->user_id }}">
                     @endempty
+
                     <div class="form-group">
                         <label for="description">Текст отзыва</label>
                         <textarea class="form-control{{ $errors->has('description') ? ' is-invalid' : '' }}"
@@ -37,6 +38,20 @@
                                   id="description"
                                   required
                                   rows="3">{{ old('description') ? old('description') : $review->description }}</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="registered_at">Дата отзыва</label>
+                        <input type="date"
+                               id="registered_at"
+                               name="registered_at"
+                               value="{{ old("registered_at", datehelper()->format($review->registered_at, "Y-m-d")) }}"
+                               class="form-control @error("registered_at") is-invalid @enderror">
+                        @error("registered_at")
+                            <div class="invalid-feedback" role="alert">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
 
                     <div class="btn-group"

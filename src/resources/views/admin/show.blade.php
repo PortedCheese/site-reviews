@@ -25,9 +25,9 @@
                     <div class="btn-group btn-group-sm">
                         @can("publish", \App\Review::class)
                             @if ($moderated)
-                                <button type="button" class="btn btn-{{ $review->moderated ? "success" : "secondary" }}"
+                                <button type="button" class="btn btn-{{ $review->moderated_at ? "success" : "secondary" }}"
                                         data-confirm="{{ "change-moderate-{$review->id}" }}">
-                                    <i class="fas fa-toggle-{{ $review->moderated ? "on" : "off" }}"></i>
+                                    <i class="fas fa-toggle-{{ $review->moderated_at ? "on" : "off" }}"></i>
                                 </button>
                             @endif
                         @endcan

@@ -28,9 +28,9 @@ class ReviewsController extends Controller
         $query = $request->query;
         $reviews = Review::query();
         if ($this->routeName == "admin.reviews.need-moderate") {
-            $reviews->where('moderated', 0);
+            $reviews->whereNull('moderated_at');
         }
-        $reviews->orderBy('created_at', 'desc');
+        $reviews->orderBy('registered_at', 'desc');
         return view("site-reviews::admin.index", [
             'reviews' => $reviews
                 ->paginate(base_config()->get('reviews', "pager"))
@@ -89,8 +89,10 @@ class ReviewsController extends Controller
     {
         Validator::make($data, [
             "description" => ["required"],
+            "registered_at" => ["required", "date"],
         ], [], [
             "description" => "Текст отзыва",
+            "registered_at" => "Дата отзыва",
         ])->validate();
     }
 
@@ -104,7 +106,7 @@ class ReviewsController extends Controller
     public function changeModerate(Review $review)
     {
         $this->authorize("publish", $review);
-        $review->moderated = !$review->moderated;
+        $review->moderated_at = empty($review->moderated_at) ? now() : null;
         $review->save();
         return redirect()
             ->back()
