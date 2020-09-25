@@ -22,8 +22,8 @@
                                    class="form-control{{ $errors->has('from') ? ' is-invalid' : '' }}">
                             @if ($errors->has('from'))
                                 <span class="invalid-feedback" role="alert">
-                            <strong>{{ $errors->first('from') }}</strong>
-                        </span>
+                                    <strong>{{ $errors->first('from') }}</strong>
+                                </span>
                             @endif
                         </div>
                     @endisset
@@ -34,6 +34,7 @@
                         <label for="description">Текст отзыва</label>
                         <textarea class="form-control{{ $errors->has('description') ? ' is-invalid' : '' }}"
                                   name="description"
+                                  id="description"
                                   required
                                   rows="3">{{ old('description') ? old('description') : $review->description }}</textarea>
                     </div>

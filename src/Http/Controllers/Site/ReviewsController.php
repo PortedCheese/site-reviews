@@ -35,7 +35,7 @@ class ReviewsController extends Controller
 
         Review::create($request->all());
 
-        if (siteconf()->get('reviews', "needModerate")) {
+        if (base_config()->get('reviews', "needModerate")) {
             $message = "Ваш отзыв получен, он появится на сайте после модерации администратором";
         }
         else {
@@ -75,7 +75,7 @@ class ReviewsController extends Controller
     {
         $this->storeAnswerValidator($request->all());
         Review::create($request->all());
-        if (siteconf()->get('reviews', "needModerate")) {
+        if (base_config()->get('reviews', "needModerate")) {
             $message = "Ваш отзыв получен, он появится на сайте после модерации администратором";
         }
         else {
@@ -114,6 +114,7 @@ class ReviewsController extends Controller
      *
      * @param Request $request
      * @return array
+     * @throws \Throwable
      */
     public function list(Request $request)
     {
@@ -121,10 +122,13 @@ class ReviewsController extends Controller
             ->where('moderated', 1)
             ->whereNull('review_id')
             ->orderBy('created_at', 'desc')
-            ->paginate(siteconf()->get('reviews', "pager"))
+            ->paginate(base_config()->get('reviews', "pager"))
             ->appends($request->input());
         $rendered = [];
         foreach ($reviews as $review) {
+            /**
+             * @var Review $review
+             */
             $rendered[] = [
                 'html' => $review->getTeaser(),
                 'review' => $review,

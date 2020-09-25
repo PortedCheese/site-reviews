@@ -5,7 +5,7 @@ namespace PortedCheese\SiteReviews\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Review;
 use Illuminate\Http\Request;
-use PortedCheese\SiteReviews\Http\Requests\ReviewStoreRequest;
+use Illuminate\Support\Facades\Validator;
 
 class ReviewsController extends Controller
 {
@@ -33,12 +33,12 @@ class ReviewsController extends Controller
         $reviews->orderBy('created_at', 'desc');
         return view("site-reviews::admin.index", [
             'reviews' => $reviews
-                ->paginate(siteconf()->get('reviews', "pager"))
+                ->paginate(base_config()->get('reviews', "pager"))
                 ->appends($request->input()),
             'query' => $query,
             'per' => self::PAGER,
             'page' => $request->query->get('page', 1) - 1,
-            'moderated' => siteconf()->get('reviews', "needModerate"),
+            'moderated' => base_config()->get('reviews', "needModerate"),
         ]);
     }
 
@@ -52,7 +52,7 @@ class ReviewsController extends Controller
     {
         return view("site-reviews::admin.show", [
             'review' => $review,
-            'moderated' => siteconf()->get('reviews', "needModerate"),
+            'moderated' => base_config()->get('reviews', "needModerate"),
         ]);
     }
 
@@ -72,16 +72,26 @@ class ReviewsController extends Controller
     /**
      * Обновление.
      *
-     * @param ReviewStoreRequest $request
+     * @param Request $request
      * @param Review $review
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(ReviewStoreRequest $request, Review $review)
+    public function update(Request $request, Review $review)
     {
+        $this->updateValidator($request->all());
         $review->update($request->all());
         return redirect()
             ->route("admin.reviews.show", ['review' => $review])
             ->with('success', 'Отзыв успешно обновлен');
+    }
+
+    protected function updateValidator($data)
+    {
+        Validator::make($data, [
+            "description" => ["required"],
+        ], [], [
+            "description" => "Текст отзыва",
+        ])->validate();
     }
 
     /**

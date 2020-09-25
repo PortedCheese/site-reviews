@@ -25,7 +25,7 @@ class Review extends Model
         parent::boot();
 
         static::creating(function (\App\Review $review) {
-            if (empty(siteconf()->get('reviews', "needModerate"))) {
+            if (empty(base_config()->get('reviews', "needModerate"))) {
                 $review->moderated = 1;
             }
         });
@@ -74,7 +74,7 @@ class Review extends Model
      */
     public function routeNotificationForMail($notification)
     {
-        return siteconf()->get("reviews", "email");
+        return base_config()->get("reviews", "email");
     }
 
     /**
@@ -177,6 +177,7 @@ class Review extends Model
      * Ответы.
      *
      * @return array|mixed
+     * @throws \Throwable
      */
     public function getRenderedAnswers()
     {
@@ -185,7 +186,13 @@ class Review extends Model
             return $cached;
         }
         $answers = [];
-        foreach ($this->answers->where('moderated', 1)->sortBy('created_at') as $answer) {
+        $collection = $this->answers
+            ->where('moderated', 1)
+            ->sortBy('created_at');
+        foreach ($collection as $answer) {
+            /**
+             * @var \App\Review $answer
+             */
             $answers[] = $answer->getTeaser();
         }
         Cache::forever("review-answers:{$this->id}", $answers);
