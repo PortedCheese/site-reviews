@@ -21,7 +21,14 @@
                             {--config : Make config}
 
 ### Versions:
-
+    
+    v1.5.0:
+        - Пересобрана таблица отзывов
+        - Добавлена редактируемая дата отзыва
+    Обновление:
+        - php artisan migrate
+        - php artisan cache:clear
+    
     v1.3.0:
         - Шаблоны меню изменены под sb-admin
         
