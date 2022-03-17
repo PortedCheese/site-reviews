@@ -31,6 +31,8 @@ class ReviewsMakeCommand extends BaseConfigModelCommand
      */
     protected $description = 'Make reviews settings';
 
+    protected $vendorName = 'PortedCheese';
+
     protected $packageName = "SiteReviews";
 
     /**
