@@ -10,7 +10,7 @@
                          class="img-thumbnail rounded-circle"
                          alt="{{ $avatar->name }}">
                 @else
-                    <i class="fas fa-user fa-3x pt-2"></i>
+                    <i class="fas fa-angle-double-right fa-3x pt-2 text-primary"></i>
                 @endif
             </div>
             <div class="col align-self-center d-block d-md-none">
