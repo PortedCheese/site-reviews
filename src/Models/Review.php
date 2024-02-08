@@ -72,13 +72,19 @@ class Review extends Model
      * Route notifications for the mail channel.
      *
      * @param  \Illuminate\Notifications\Notification  $notification
-     * @return string
+     *
+     * @return array
      */
+
     public function routeNotificationForMail($notification)
     {
-        return base_config()->get("reviews", "email");
+        return $this->emailsToArray();
     }
 
+    private function emailsToArray() {
+        //perform more checks that you need
+        return array_map('trim', explode(',', base_config()->get("reviews", "email")));
+}
     /**
      * Может быть автор отзыва.
      *

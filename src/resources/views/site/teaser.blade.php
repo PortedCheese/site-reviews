@@ -3,12 +3,12 @@
         <div class="row">
             <div class="col-3 col-md-12 text-center">
                 @if(! empty($avatar))
-                    <img src="{{ route('imagecache', [
-                                    'template' => 'avatar-small',
-                                    'filename' => $avatar->file_name
-                                 ]) }}"
-                         class="img-thumbnail rounded-circle"
-                         alt="{{ $avatar->name }}">
+                    @pic([
+                    "image" => $avatar,
+                    "template" => "avatar-small",
+                    "grid" => [],
+                    "imgClass" => "img-thumbnail rounded-circle",
+                    ])
                 @else
                     <i class="fas fa-angle-double-right fa-3x pt-2 text-primary"></i>
                 @endif
