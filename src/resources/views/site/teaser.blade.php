@@ -18,9 +18,7 @@
                     {{ $review->name }}
                     <br>
                     <small class="text-black-50">
-                        <b>
-                            {{ $review->registered_human }}
-                        </b>
+                        {{ $review->registered_human }}
                     </small>
                 </h6>
             </div>
@@ -28,16 +26,15 @@
     </div>
     <div class="col-12 col-md-10">
         <div class="row">
-            <div class="col-12 col-md-4">
-                <h4 class="d-none d-md-block">
-                    {{ $review->name }}
-                    <hr>
-                    <small class="text-black-50 lead">
-                        <b class="small">
-                            {{ $review->registered_human }}
-                        </b>
+            <div class="col-12">
+                <div class="d-none d-md-flex justify-content-between">
+                    <span class="font-weight-bold">
+                        {{ $review->name }}
+                    </span>
+                    <small class="text-black-50">
+                        {{ $review->registered_human }}
                     </small>
-                </h4>
+                </div>
             </div>
         </div>
 

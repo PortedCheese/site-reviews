@@ -22,6 +22,10 @@
 
 ### Versions:
     
+    v1.6.5: 
+        - change view
+        Обновление:
+        - php artisan vendor:publish --provider="PortedCheese\SiteReviews\ServiceProvider" --tag=public --force
     v1.6.4:
         - email для уведомлений можно задать через запятую
         - заменена иконка неавторизованного пользователя

@@ -1,49 +1,54 @@
 <template>
     <div class="col-12">
         <form id="createReviewForm">
-            <div class="alert" :class="{'alert-danger': error, 'alert-success': !error}" role="alert" v-if="messages.length">
-                <template v-for="message in messages">
-                    {{ message }}
-                    <br>
-                </template>
-            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="alert" :class="{'alert-danger': error, 'alert-success': !error}" role="alert" v-if="messages.length">
+                        <template v-for="message in messages">
+                            {{ message }}
+                            <br>
+                        </template>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-8">
+                    <input type="hidden"
+                           name="user_id"
+                           v-if="formData.user"
+                           :value="formData.user">
 
-            <input type="hidden"
-                   name="user_id"
-                   v-if="formData.user"
-                   :value="formData.user">
-
-            <div class="form-group mt-3" v-if="! formData.user">
-               <label for="from">Ваше имя:</label>
-                <input type="text"
-                       id="from"
-                       name="from"
-                       v-model="from"
-                       placeholder="Иванов Иван"
-                       class="form-control mb-3">
-            </div>
-
-            <div class="form-group mt-3">
-                <label for="description">Ваш отзыв:</label>
-                <textarea type="text"
-                       v-model="description"
-                       name="description"
-                       rows="3"
-                       cols="4"
-                       id="description"
-                       placeholder="Сообщение"
-                       class="form-control mb-3">
+                    <div class="form-group mt-3" v-if="! formData.user">
+                        <label for="from" class="d-none">Ваше имя:</label>
+                        <input type="text"
+                               id="from"
+                               name="from"
+                               v-model="from"
+                               placeholder="Ваше имя"
+                               class="form-control mb-3">
+                    </div>
+                    <div class="form-group mt-3">
+                        <label for="description" class="d-none">Ваш отзыв:</label>
+                        <textarea type="text"
+                                  v-model="description"
+                                  name="description"
+                                  rows="3"
+                                  cols="4"
+                                  id="description"
+                                  placeholder="Комментарий"
+                                  class="form-control mb-3">
                        </textarea>
 
-            </div>
-
-            <div class="form-group">
-                <button type="button"
-                        class="btn btn-primary"
-                        :disabled="loading"
-                        @click="inlineForm()">
-                    Оставить отзыв <i class="fas fa-spinner fa-spin" v-if="loading"></i>
-                </button>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-4 d-flex">
+                    <div class="form-group ml-auto ml-lg-0 mt-auto">
+                        <button type="button"
+                                class="btn btn-primary"
+                                :disabled="loading"
+                                @click="inlineForm()">
+                            Оставить отзыв <i class="fas fa-spinner fa-spin" v-if="loading"></i>
+                        </button>
+                    </div>
+                </div>
             </div>
         </form>
 
