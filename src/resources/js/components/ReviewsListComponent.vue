@@ -8,8 +8,8 @@
                         <button type="button"
                                 v-on:click="showAnswer(item.review)"
                                 class="btn btn-outline-primary"
-                                data-toggle="modal"
-                                data-target="#reviewAnswerCreate">
+                                data-bs-toggle="modal"
+                                data-bs-target="#reviewAnswerCreate">
                             Ответить
                         </button>
                     </div>

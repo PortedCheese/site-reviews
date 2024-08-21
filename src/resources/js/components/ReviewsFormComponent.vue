@@ -59,7 +59,7 @@
                         <h5 class="modal-title" id="reviewAnswerCreateLabel">
                             Добавить <span v-if="formData.review">ответ</span><span v-else="formData.review">отзыв</span>
                         </h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
