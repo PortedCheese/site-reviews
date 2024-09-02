@@ -16,7 +16,7 @@
                            v-if="formData.user"
                            :value="formData.user">
 
-                    <div class="form-group mt-3" v-if="! formData.user">
+                    <div class="my-3" v-if="! formData.user">
                         <label for="from" class="d-none">Ваше имя:</label>
                         <input type="text"
                                id="from"
@@ -25,7 +25,7 @@
                                placeholder="Ваше имя"
                                class="form-control mb-3">
                     </div>
-                    <div class="form-group mt-3">
+                    <div class="my-3">
                         <label for="description" class="d-none">Ваш отзыв:</label>
                         <textarea type="text"
                                   v-model="description"
@@ -40,7 +40,7 @@
                     </div>
                 </div>
                 <div class="col-12 col-lg-4 d-flex">
-                    <div class="form-group ml-auto ml-lg-0 mt-auto">
+                    <div class="mb-3 ml-auto ml-lg-0 mt-auto">
                         <button type="button"
                                 class="btn btn-primary"
                                 :disabled="loading"
@@ -59,9 +59,7 @@
                         <h5 class="modal-title" id="reviewAnswerCreateLabel">
                             Добавить <span v-if="formData.review">ответ</span><span v-else="formData.review">отзыв</span>
                         </h5>
-                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <form id="createReviewAnswerForm">

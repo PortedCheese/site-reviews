@@ -1,5 +1,5 @@
 ### Versions:
-    v2.0.0:
+    v2.0.0-2.0.1:
         - base-settings 5.0
         - обновлены компоненты ReviewsFormComponent, ReviewsListComponent
         - обновлен  admin.menu view

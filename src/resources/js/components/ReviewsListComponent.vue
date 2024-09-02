@@ -4,7 +4,7 @@
             <div v-for="item in reviews" class="review-cover mt-4">
                 <div v-html="item.html"></div>
                 <div class="row">
-                    <div class="col-12 text-right mt-3">
+                    <div class="col-12 text-end mt-3">
                         <button type="button"
                                 v-on:click="showAnswer(item.review)"
                                 class="btn btn-outline-primary"
