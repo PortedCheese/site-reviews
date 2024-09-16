@@ -14,7 +14,7 @@
                     @endisset
                     <span>Отзывы</span>
                 </a>
-                <div id="collapse-reviews-menu" class="collapse{{ $active ? " show" : "" }}" data-parent="#accordionSidebar">
+                <div id="collapse-reviews-menu" class="collapse{{ $active ? " show" : "" }}" data-bs-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a href="{{ route('admin.reviews.index') }}"
                            class="collapse-item{{ $currentRoute == "admin.reviews.index" ? " active" : "" }}">
@@ -33,7 +33,7 @@
                    href="#"
                    id="user-dropdown"
                    role="button"
-                   data-toggle="dropdown"
+                   data-bs-toggle="dropdown"
                    aria-haspopup="true"
                    aria-expanded="false">
                     @isset($ico)
