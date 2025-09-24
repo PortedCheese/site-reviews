@@ -64,7 +64,7 @@ class ReviewsController extends Controller
         ], [
             "description" => "Текст отзыва",
             "from" => "Ваше имя",
-            "privacy_policy" => "Ваше имя",
+            "privacy_policy" => "Согласие на обработку персональных данных",
         ])->validate();
     }
 
