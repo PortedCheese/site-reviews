@@ -1,5 +1,10 @@
 ### Versions:
-    v2.0.0-2.0.1:
+    v2.0.3: privacy     
+    Обновление:
+
+        php artisan vendor:publish --provider="PortedCheese\SiteReviews\ServiceProvider" --tag=public --force
+
+    v2.0.0-2.0.2:
         - base-settings 5.0
         - обновлены компоненты ReviewsFormComponent, ReviewsListComponent
         - обновлен  admin.menu view
