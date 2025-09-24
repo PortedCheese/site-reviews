@@ -22,6 +22,9 @@
 
 ### Versions:
     
+    v1.6.6: privacy
+        Обновление:
+        - php artisan vendor:publish --provider="PortedCheese\SiteReviews\ServiceProvider" --tag=public --force
     v1.6.5: 
         - change view
         Обновление:
