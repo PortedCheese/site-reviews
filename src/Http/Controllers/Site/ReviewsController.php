@@ -56,12 +56,15 @@ class ReviewsController extends Controller
         Validator::make($data, [
             "description" => ["bail", "required"],
             "from" => ["nullable", "required_without:user_id"],
+            "privacy_policy" => ["required"],
         ], [
             'description.required' => "Поле Текст отзыва обязательно для заполнения",
             'from.required_without' => "Поле Ваше имя обязательно для заполнения",
+            'privacy_policy' => "Согласие на обработку персональных данных обязательно для заполнения",
         ], [
             "description" => "Текст отзыва",
             "from" => "Ваше имя",
+            "privacy_policy" => "Ваше имя",
         ])->validate();
     }
 

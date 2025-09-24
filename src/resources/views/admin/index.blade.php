@@ -78,7 +78,7 @@
                                         </div>
                                         @can("delete", \App\Review::class)
                                             <confirm-form :id="'{{ "delete-form-{$review->id}" }}'">
-                                                <template>
+                                                <template v-if="true">
                                                     <form action="{{ route('admin.reviews.destroy', ['review' => $review]) }}"
                                                           id="delete-form-{{ $review->id }}"
                                                           class="btn-group"
@@ -94,7 +94,7 @@
                                                 <confirm-form :id="'{{ "change-moderate-{$review->id}" }}'"
                                                               confirm-text="Да, изменить!"
                                                               text="Это изменит статус показа отзыва на сайте">
-                                                    <template>
+                                                    <template v-if="true">
                                                         <form id="change-moderate-{{ $review->id }}"
                                                               action="{{ route("admin.reviews.moderate", ['review' => $review]) }}"
                                                               method="post">

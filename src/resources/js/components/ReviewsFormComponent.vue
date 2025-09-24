@@ -99,6 +99,19 @@
                                        placeholder="Сообщение"
                                        class="form-control"></textarea>
                             </div>
+
+                          <div class="form-group">
+                            <div class="custom-control custom-checkbox">
+                              <input type="checkbox"
+                                     class="custom-control-input" id="privacy_policy" required name="privacy_policy">
+                              <label class="custom-control-label" for="privacy_policy">
+                                Я даю свое
+                                <a href="#agreementModal" data-bs-toggle="modal" data-bs-target="#agreementModal">Согласие на обработку персональных данных</a> и принимаю условия <a href="/policy" target="_blank">Политики по обработке персональных данных</a>
+                              </label>
+                            </div>
+                          </div>
+
+
                         </form>
                     </div>
                     <div class="modal-footer">
