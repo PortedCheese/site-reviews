@@ -38,6 +38,16 @@
                        </textarea>
 
                     </div>
+                  <div class="my-3">
+                    <div class="custom-control custom-checkbox">
+                      <input type="checkbox"
+                             class="custom-control-input" id="privacy_policy_reviews" required name="privacy_policy">
+                      <label class="custom-control-label" for="privacy_policy_reviews">
+                        Я даю свое
+                        <a href="#agreementModal" data-bs-toggle="modal" data-bs-target="#agreementModal">Согласие на обработку персональных данных</a> и принимаю условия <a href="/policy" target="_blank">Политики по обработке персональных данных</a>
+                      </label>
+                    </div>
+                  </div>
                 </div>
                 <div class="col-12 col-lg-4 d-flex">
                     <div class="mb-3 ml-auto ml-lg-0 mt-auto">
@@ -103,8 +113,8 @@
                           <div class="form-group">
                             <div class="custom-control custom-checkbox">
                               <input type="checkbox"
-                                     class="custom-control-input" id="privacy_policy" required name="privacy_policy">
-                              <label class="custom-control-label" for="privacy_policy">
+                                     class="custom-control-input" id="privacy_policy_answer" required name="privacy_policy">
+                              <label class="custom-control-label" for="privacy_policy_answer">
                                 Я даю свое
                                 <a href="#agreementModal" data-bs-toggle="modal" data-bs-target="#agreementModal">Согласие на обработку персональных данных</a> и принимаю условия <a href="/policy" target="_blank">Политики по обработке персональных данных</a>
                               </label>
