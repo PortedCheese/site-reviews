@@ -60,7 +60,7 @@ class ReviewsController extends Controller
         ], [
             'description.required' => "Поле Текст отзыва обязательно для заполнения",
             'from.required_without' => "Поле Ваше имя обязательно для заполнения",
-            "privacy_policy" => ["required"],
+            "privacy_policy" => "Согласие с политикой конфиденциальности обязательно для заполнения",
         ], [
             "description" => "Текст отзыва",
             "from" => "Ваше имя",
