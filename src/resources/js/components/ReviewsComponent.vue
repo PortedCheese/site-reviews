@@ -4,6 +4,7 @@
             <i class="fas fa-spinner fa-spin fa-3x"></i>
         </div>
         <reviews-form :form-data="formData"
+                      :company="company"
                       v-on:new-review="updateReviews"
                       ref="childForms">
         </reviews-form>
@@ -27,7 +28,7 @@
             'reviews-form': Form,
             'reviews-list': List
         },
-        props: ['formAction', 'userAuth', 'getUrl', 'answerAction'],
+        props: ['formAction', 'userAuth', 'getUrl', 'answerAction', 'company'],
         data() {
             return {
                 formData: {},
