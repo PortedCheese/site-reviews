@@ -43,7 +43,7 @@
                       <input type="checkbox"
                              class="custom-control-input" id="privacy_policy_reviews" required name="privacy_policy">
                       <label class="custom-control-label" for="privacy_policy_reviews">
-                        Я даю свое
+                        Я даю <span v-if="company">{{ company }}</span>  свое
                         <a href="#agreementModal" data-bs-toggle="modal" data-bs-target="#agreementModal">Согласие на обработку персональных данных</a> и принимаю условия <a href="/policy" target="_blank">Политики по обработке персональных данных</a>
                       </label>
                     </div>
@@ -115,7 +115,7 @@
                               <input type="checkbox"
                                      class="custom-control-input" id="privacy_policy_answer" required name="privacy_policy">
                               <label class="custom-control-label" for="privacy_policy_answer">
-                                Я даю свое
+                                Я даю <span v-if="company">{{ company }}</span> свое
                                 <a href="#agreementModal" data-bs-toggle="modal" data-bs-target="#agreementModal">Согласие на обработку персональных данных</a> и принимаю условия <a href="/policy" target="_blank">Политики по обработке персональных данных</a>
                               </label>
                             </div>
@@ -143,7 +143,7 @@
 
 <script>
     export default {
-        props: ['formData'],
+        props: ['formData','company'],
         data() {
             return {
                 messages: [],

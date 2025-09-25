@@ -1,5 +1,5 @@
 ### Versions:
-    v2.0.3: privacy     
+    v2.0.3-2.0.5: privacy & privacy input    
     Обновление:
 
         php artisan vendor:publish --provider="PortedCheese\SiteReviews\ServiceProvider" --tag=public --force
